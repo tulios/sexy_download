@@ -12,12 +12,8 @@ Script that retrieves google chrome cookies and calls aria2c for multithreading 
   
 == Considerations
 
-  - I just tested this script with MAC OSX
-  
-  - I just use Google Chrome
-  
-  - I download most of my files with megaUpload using a paid account (It works with other services too)
-  
-  - My better result was 3.5 mb/s
-  
-  - I just solved my problem and maybe one day I will improve this script ;)
+- I just tested this script with MAC OSX
+- I just use Google Chrome
+- I download most of my files with megaUpload using a paid account (It works with other services too)
+- My better result was 3.5 mb/s
+- I just solved my problem and maybe one day I will improve this script ;)
