@@ -91,11 +91,11 @@ class CookieExtractor
 end  
 
 @domain = ARGV[0]
-@dir = ARGV[1]
+@dir = File.expand_path(ARGV[1])
 @file_path = CookieExtractor.new(@domain, @dir).extract!
 
-command = "aria2c -c -x16 #{@domain} --load-cookies=#{@file_path}"
-command << " --dir=#{@dir}" if @dir
+command = %{aria2c -c -x16 #{@domain} --load-cookies="#{@file_path}"}
+command << %{ --dir="#{@dir}"} if @dir
 puts "\n== Downloading with:"
 puts "\t#{command}\n  "
 

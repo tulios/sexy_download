@@ -1,1 +1,18 @@
-Downloads em multithread com aria2c pegando os cookies do chrome
+= Sexy_download
+
+Script that retrieves google chrome cookies and calls aria2c for multithreading download
+
+== Usage
+
+1 - Create a syslink for bin/sexy_download in /usr/local/bin/
+2 - Run
+
+  sexy_download http://someStorageService.com?q=MVGHT ~/My/Download/Path
+  
+== Considerations
+
+  - I just tested this script with MAC OSX
+  - I just use Google Chrome
+  - I download most of my files with megaUpload using a paid account (It works with other services too)
+  - My better result was 3.5 mb/s
+  - I just solved my problem and maybe one day I will improve this script ;)
