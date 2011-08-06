@@ -2,11 +2,4 @@
 # encoding: utf-8
 
 $LOAD_PATH.unshift "."
-
-# link_path = `which sexy_download`
-# ruby_path = `readlink #{link_path}`
-# ruby_path.gsub!("bin/sexy_download", "").strip!
-# ruby_path.gsub!(/\/?$/, '')
-
-# require "#{ruby_path}/sexy_download.rb"
 require 'sexy_download'

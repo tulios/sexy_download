@@ -7,6 +7,9 @@ begin
     gemspec.email = "ornelas.tulio@gmail.com"
     gemspec.homepage = "http://github.com/tulios/sexy_download"
     gemspec.authors = ["Túlio Ornelas"]
+                                         
+    gemspec.add_runtime_dependency("sqlite3", "~> 1.3.3")
+    gemspec.add_runtime_dependency("activerecord", "~> 3.0.9")
     
     gemspec.executables = ["sexy_download"]
   end

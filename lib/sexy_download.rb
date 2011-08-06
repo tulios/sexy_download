@@ -2,32 +2,36 @@
 
 require 'rubygems'
 require 'tempfile'
+require 'etc'
+
 require 'sqlite3'
 require 'active_record'
 
 class CookieExtractor
-  
+
+  CHROME_COOKIES_FILE_MAC_OSX = "Library/Application Support/Google/Chrome/Default/Cookies"
+
   def initialize domain, dir
     @domain = domain
     @dir = dir
     @cookies_txt = []
   end
-  
+
   def extract!
      find_host_key!
      generate_cookie!(read_cookie!)
      @file_path
   end
-  
+
   private
   def find_host_key!
     server = @domain.scan(/:\/\/([^:#\/\?]+)/).flatten.first
     raise "Malformed domain!" unless server
-    
+
     parts = server.split(".")
     @host_key = ".#{parts[-2]}.#{parts[-1]}"
   end
-  
+
   def host_only? host
     (host =~ /#{@host_key}/) == 0
   end
@@ -43,17 +47,17 @@ class CookieExtractor
   def secure_str cookie
     secure?(cookie["secure"]).to_s.upcase
   end
-  
+
   def get_connection
     puts "\n== Reading cookies from #{@host_key} ..."
-    @cookie_db = "#{File.expand_path('~')}/Library/Application\ Support/Google/Chrome/Default/Cookies"
+    @cookie_db = "#{File.expand_path(Etc.getpwuid.dir)}/#{CHROME_COOKIES_FILE_MAC_OSX}"
     @db = ActiveRecord::Base.establish_connection(
       :adapter => "sqlite3",
       :database => @cookie_db
     )
     @db.connection
   end
-  
+
   def read_cookie!
     connection = get_connection
     cookies = connection.execute("SELECT host_key, path, secure, expires_utc, name, value FROM cookies where host_key like '%#{@host_key}%'")
@@ -77,20 +81,32 @@ class CookieExtractor
         @cookies_txt << line.join("\t")
       end
     end
-    
+
     @cookies_txt.join("\n")
   end
-  
+
   def generate_cookie! cookies_txt
     puts "\n== Exporting cookies..."
     file_name = "cookies_#{Time.now.to_i.to_s}.txt"
-    
+
     file = File.new(@dir.nil? ? file_name : File.join(@dir, file_name), "w")
     file.write(cookies_txt)
     @file_path = file.path
     file.close
   end
-end  
+end
+
+raise %{
+  This script is totally based on aria2 (http://aria2.sourceforge.net/)
+  I did not find on your machine using 'which aria2c'
+  In Mac OSX try:
+    - sudo port install aria2
+    or
+    - brew install aria2
+    or
+    Download and compile it yourself
+    ;)\n
+} if `which aria2c`.empty?
 
 @domain = ARGV[0]
 @dir = File.expand_path(ARGV[1] || ".")
@@ -102,6 +118,33 @@ puts "\n== Downloading with:"
 puts "\t#{command}\n  "
 
 system(command)
-                      
-puts "\n== Deleting #{@file_path}"  
+
+puts "\n== Deleting #{@file_path}"
 File.delete @file_path
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
