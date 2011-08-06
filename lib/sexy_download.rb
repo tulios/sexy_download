@@ -22,6 +22,8 @@ class CookieExtractor
   private
   def find_host_key!
     server = @domain.scan(/:\/\/([^:#\/\?]+)/).flatten.first
+    raise "Malformed domain!" unless server
+    
     parts = server.split(".")
     @host_key = ".#{parts[-2]}.#{parts[-1]}"
   end
