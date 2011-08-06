@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'rubygems'
 require 'tempfile'
 require 'etc'
@@ -10,9 +12,7 @@ class CookieExtractor
   CHROME_COOKIES_FILE_MAC_OSX = "Library/Application Support/Google/Chrome/Default/Cookies"
 
   def initialize domain, dir
-    @domain = domain
-    @dir = dir
-    @cookies_txt = []
+    @domain, @dir, @cookies_txt = domain, dir, []
   end
 
   def extract!
@@ -106,6 +106,13 @@ raise %{
     ;)\n
 } if `which aria2c`.empty?
 
+raise %{
+  You forgot to inform the download url, like:
+  $ sexy_download http://myDownloadUrl.com?q=ZHGT ~/My/Target/Dir
+  or
+  $ sexy_download http://myDownloadUrl.com?q=ZHGT\n
+} if ARGB[0].nil?
+
 @domain = ARGV[0]
 @dir = File.expand_path(ARGV[1] || ".")
 @file_path = CookieExtractor.new(@domain, @dir).extract!
@@ -113,7 +120,7 @@ raise %{
 command = %{aria2c -c -x16 #{@domain} --load-cookies="#{@file_path}"}
 command << %{ --dir="#{@dir}"} if @dir
 puts "\n== Downloading with:"
-puts "\t#{command}\n  "
+puts "\t#{command}\n"
 
 system(command)
 

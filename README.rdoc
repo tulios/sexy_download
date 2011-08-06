@@ -1,6 +1,6 @@
 = Sexy_download
 
-Script that retrieves google chrome cookies and calls aria2c for multithreading download
+A Script that retrieves google chrome cookies and calls aria2c for multithreading download
 
 == Install
 
@@ -10,7 +10,7 @@ You still need to install aria2 in your machine, I did not include this process 
 
   sudo port install aria2
 
-  or
+or
 
   sudo brew install aria2
 
@@ -18,7 +18,7 @@ You still need to install aria2 in your machine, I did not include this process 
 
   sexy_download http://someStorageService.com?q=MVGHT ~/My/Download/Path
 
-  or
+or
 
   sexy_download http://someStorageService.com?q=MVGHT
 
