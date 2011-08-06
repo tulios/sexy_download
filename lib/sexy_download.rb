@@ -91,7 +91,7 @@ class CookieExtractor
 end  
 
 @domain = ARGV[0]
-@dir = File.expand_path(ARGV[1])
+@dir = File.expand_path(ARGV[1] || ".")
 @file_path = CookieExtractor.new(@domain, @dir).extract!
 
 command = %{aria2c -c -x16 #{@domain} --load-cookies="#{@file_path}"}

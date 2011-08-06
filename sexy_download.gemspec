@@ -25,7 +25,8 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "bin/sexy_download",
-     "lib/sexy_download.rb"
+     "lib/sexy_download.rb",
+     "sexy_download.gemspec"
   ]
   s.homepage = %q{http://github.com/tulios/sexy_download}
   s.rdoc_options = ["--charset=UTF-8"]
