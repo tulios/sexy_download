@@ -111,7 +111,7 @@ raise %{
   $ sexy_download http://myDownloadUrl.com?q=ZHGT ~/My/Target/Dir
   or
   $ sexy_download http://myDownloadUrl.com?q=ZHGT\n
-} if ARGB[0].nil?
+} if ARGV[0].nil?
 
 @domain = ARGV[0]
 @dir = File.expand_path(ARGV[1] || ".")
