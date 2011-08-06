@@ -1,5 +1,3 @@
-# sexy_download http://www.megaupload.com/?d=HG4KNS9S ~/Downloads/
-
 require 'rubygems'
 require 'tempfile'
 require 'etc'
@@ -121,30 +119,3 @@ system(command)
 
 puts "\n== Deleting #{@file_path}"
 File.delete @file_path
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

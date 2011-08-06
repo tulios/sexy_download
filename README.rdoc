@@ -2,14 +2,28 @@
 
 Script that retrieves google chrome cookies and calls aria2c for multithreading download
 
+== Install
+
+  gem install sexy_download
+
+You still need to install aria2 in your machine, I did not include this process on this gem. In Mac OSX try:
+
+  sudo port install aria2
+
+  or
+
+  sudo brew install aria2
+
 == Usage
 
-1 - Create a syslink for bin/sexy_download in /usr/local/bin/
-
-2 - Run
-
   sexy_download http://someStorageService.com?q=MVGHT ~/My/Download/Path
-  
+
+  or
+
+  sexy_download http://someStorageService.com?q=MVGHT
+
+Without the target path +sexy_download+ will save the file in the folder that you call it
+
 == Considerations
 
 - I just tested this script with MAC OSX
