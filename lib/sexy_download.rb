@@ -95,7 +95,7 @@ class CookieExtractor
 end
 
 raise %{
-  This script is totally based on aria2 (http://aria2.sourceforge.net/)
+  \nThis script is totally based on aria2 (http://aria2.sourceforge.net/)
   I did not find on your machine using 'which aria2c'
   In Mac OSX try:
     - sudo port install aria2
@@ -107,7 +107,7 @@ raise %{
 } if `which aria2c`.empty?
 
 raise %{
-  You forgot to inform the download url, like:
+  \nYou forgot to inform the download url, like:
   $ sexy_download http://myDownloadUrl.com?q=ZHGT ~/My/Target/Dir
   or
   $ sexy_download http://myDownloadUrl.com?q=ZHGT\n
