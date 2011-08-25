@@ -2,6 +2,7 @@
 
 require 'rubygems'
 require 'tempfile'
+require 'optparse'
 require 'etc'
 
 require 'sqlite3'
@@ -94,6 +95,12 @@ class CookieExtractor
   end
 end
 
+def get_file_path!
+  domain = @list_file ? File.open(@list_file, "r").first : @domain
+  puts "\n== Domain: #{domain}"
+  @file_path = CookieExtractor.new(domain, @dir).extract!
+end
+
 raise %{
   \nThis script is totally based on aria2 (http://aria2.sourceforge.net/)
   I did not find on your machine using 'which aria2c'
@@ -106,21 +113,37 @@ raise %{
     ;)\n
 } if `which aria2c`.empty?
 
-raise %{
-  \nYou forgot to inform the download url, like:
-  $ sexy_download http://myDownloadUrl.com?q=ZHGT ~/My/Target/Dir
-  or
-  $ sexy_download http://myDownloadUrl.com?q=ZHGT\n
-} if ARGV[0].nil?
+opts = OptionParser.new do |opts|
+  opts.on("-l", "--list FILE", "List of files") {|list_file| @list_file = list_file}
+end
+opts.parse! ARGV
 
-@domain = ARGV[0]
-@dir = File.expand_path(ARGV[1] || ".")
-@file_path = CookieExtractor.new(@domain, @dir).extract!
+unless @list_file
+  raise %{
+    \nYou forgot to inform the download url, like:
+    $ sexy_download http://myDownloadUrl.com?q=ZHGT ~/My/Target/Dir
+    or
+    $ sexy_download http://myDownloadUrl.com?q=ZHGT\n
+  } if ARGV[0].nil?
 
-command = %{aria2c -c -x16 #{@domain} --load-cookies="#{@file_path}"}
+  @domain = ARGV[0]
+  @dir = File.expand_path(ARGV[1] || ".")
+
+else
+  puts "\n== File list detected: #{@list_file}"
+  @dir = File.expand_path(ARGV[0] || ".")
+end
+
+get_file_path!
+
+# -x16 = 16 threads
+# -j5  = 5 concurrently downloads
+list_or_domain = @list_file ? "-j3 -i \"#{@list_file}\"" : "#{@domain}"
+command = %{aria2c -c -x16 #{list_or_domain} --load-cookies="#{@file_path}"}
 command << %{ --dir="#{@dir}"} if @dir
+
 puts "\n== Downloading with:"
-puts "\t#{command}\n"
+puts "\t#{command}\n\n"
 
 system(command)
 

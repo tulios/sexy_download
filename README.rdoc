@@ -22,6 +22,10 @@ or
 
   sexy_download http://someStorageService.com?q=MVGHT
 
+or
+
+  sexy_download -l list_file.txt ~/My/Download/Path
+
 Without the target path +sexy_download+ will save the file in the folder that you call it
 
 == Considerations
